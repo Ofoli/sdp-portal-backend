@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - 3001:3001
+      - ${PORT}:3001
     volumes:
       - .:/app
     environment:
@@ -17,7 +17,7 @@ services:
   db:
     image: mongo:latest
     ports:
-      - 27017:27017
+      - ${DB_PORT}:27017
     volumes:
       - db-data:/data/db
     environment:
