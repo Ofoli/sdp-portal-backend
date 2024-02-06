@@ -10,5 +10,18 @@ services:
     volumes:
       - .:/app
     environment:
-      - NODE_ENV=developement
+      - NODE_ENV=${NODE_ENV}
     command: npm run start:dev
+    depends_on:
+      - db
+  db:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    volumes:
+      - db-data:/data/db
+    environment:
+      - DB_ROOT_USERNAME=${DB_ROOT_USERNAME}
+      - DB_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+volumes:
+  db-data:
