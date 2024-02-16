@@ -4,6 +4,7 @@ import globalErrorHandler from "../middlewares/error-handler";
 import AppError from "../utils/app-error";
 import usersRouter from "./users";
 import reportsRouter from "./reports";
+import authRouter from "./auth";
 import { StatusCodes } from "http-status-codes";
 
 const router = express.Router();
@@ -20,6 +21,7 @@ const send404 = (req: Request, res: Response, next: NextFunction) =>
   );
 
 router.get(URLS.base, testApp);
+router.use(authRouter);
 router.use(usersRouter);
 router.use(reportsRouter);
 router.all(URLS.notFound, send404);

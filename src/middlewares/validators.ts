@@ -15,3 +15,4 @@ export function validateData(schema: z.ZodObject<any, any>) {
 }
 
 export const validateUserData = validateData(userSchema);
+// export const validateLoginData = validateData(loginSchema);
