@@ -22,13 +22,18 @@ const User = new Schema(
     lastname: UserRequiredString,
     password: UserRequiredString,
     color: UserRequiredString,
-    email: { ...UserRequiredString, lowercase: true, immutable: true },
+    email: {
+      ...UserRequiredString,
+      lowercase: true,
+      immutable: true,
+      unique: true,
+    },
     isAdmin: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
 
-type UserDocument = z.infer<typeof userSchema> & Document;
+type UserData = z.infer<typeof userSchema>;
 
-export default model<UserDocument>("User", User);
-export { UserDocument, userSchema };
+export default model<UserData>("User", User);
+export { UserData, userSchema };

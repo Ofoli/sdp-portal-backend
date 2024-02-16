@@ -1,11 +1,10 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import { URLS } from "../config/constants";
+import { createUser } from "../controllers/users";
+import { validateUserData } from "../middlewares/validators";
 
 const router = express.Router();
 
-const testUsers = (req: Request, res: Response) =>
-  res.send({ status: true, users: [] });
-
-router.get(URLS.users, testUsers);
+router.post(URLS.users, validateUserData, createUser);
 
 export default router;
