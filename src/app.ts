@@ -1,17 +1,15 @@
-import dotenv from "dotenv";
-import express, { Request, Response } from "express";
-import { connectToMongoDB } from "./config";
-import { DB_CONN_RETRY_ATTEMPTS } from "./constants";
+import express from "express";
+import { connectToMongoDB } from "./config/mongodb";
+import { config } from "./config/config";
+import router from "./routes";
 
-dotenv.config();
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = config.PORT || 3001;
 
-app.get("/", (req: Request, res: Response) =>
-  res.send({ status: true, message: "App is running now" })
-);
+app.use(express.json());
+app.use(router);
 
-connectToMongoDB(DB_CONN_RETRY_ATTEMPTS).then((connected) => {
+connectToMongoDB(config.DB.CONN_RETRY_ATTEMPTS).then((connected) => {
   if (connected) {
     app.listen(PORT, () => {
       console.log(`Server is running at http://localhost:${PORT}`);
