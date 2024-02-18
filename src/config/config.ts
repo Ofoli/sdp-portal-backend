@@ -14,6 +14,8 @@ const config = {
     CONN_RETRY_INTERVAL: 1000,
     CONN_RETRY_ATTEMPTS: 5,
   },
+  PASSWORD_SALT: process.env.PASSWORD_SALT,
+  JWT_TOKEN: { SECRET: process.env.JWT_TOKEN_SECRET!, EXPIRATION: "30m" },
 };
 
 export { config };

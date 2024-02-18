@@ -7,5 +7,6 @@ export const URLS = {
   base: "/",
   users: "/api/users",
   report: "/api/report",
+  auth: "/api/auth/",
   notFound: "*",
 };
