@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import catchAsync from "../utils/catch-async";
 import { STATUSES } from "../config/constants";
 import { findUserByEmail } from "../models/user";
-import { createHashedPassword } from "../utils/misc";
+import { createHashedPassword, generateAuthToken } from "../utils/auth";
 import AppError from "../utils/app-error";
 import { StatusCodes } from "http-status-codes";
 import type { LoginData } from "../types/user";
@@ -23,7 +23,10 @@ export const loginUser = catchAsync(
 
     return res.json({
       status: STATUSES.SUCCESS,
-      // data: user.withoutPassword(),
+      data: {
+        user: user.getUserWithoutPassword(),
+        token: generateAuthToken(user._id),
+      },
     });
   }
 );

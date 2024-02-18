@@ -1,8 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { z } from "zod";
 //schemas
-import { userSchema } from "../schemas/user";
-import { loginSchema } from "../schemas/login";
+import { userSchema, loginSchema } from "../schemas/user";
 
 export function validateData(schema: z.ZodObject<any, any>) {
   return (req: Request, res: Response, next: NextFunction) => {

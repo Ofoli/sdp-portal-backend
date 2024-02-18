@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import catchAsync from "../utils/catch-async";
-import { createHashedPassword } from "../utils/misc";
-import { UserData } from "../schemas/user";
+import { createHashedPassword } from "../utils/auth";
 import User from "../models/user";
+import type { UserData } from "../types/user";
 
 export const createUser = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {

@@ -20,6 +20,12 @@ const UserSchema = new Schema(
   { timestamps: true }
 );
 
+UserSchema.methods.getUserWithoutPassword = function (this) {
+  const user = this.toObject();
+  delete user.password;
+  return user;
+};
+
 const User = model<UserDocument>("User", UserSchema);
 
 export default User;
