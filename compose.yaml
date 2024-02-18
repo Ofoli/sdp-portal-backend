@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - ${PORT}:3001
+    volumes:
+      - .:/app
+    environment:
+      - NODE_ENV=${NODE_ENV}
+    command: npm run start:dev
+    depends_on:
+      - db
+  db:
+    image: mongo:latest
+    ports:
+      - ${DB_PORT}:27017
+    volumes:
+      - db-data:/data/db
+    environment:
+      - DB_ROOT_USERNAME=${DB_ROOT_USERNAME}
+      - DB_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+volumes:
+  db-data:
