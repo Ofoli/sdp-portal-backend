@@ -1,14 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import bcrypt from "bcryptjs";
 import catchAsync from "../utils/catch-async";
+import { createHashedPassword } from "../utils/misc";
 import { UserData } from "../schemas/user";
 import User from "../models/user";
-
-const createHashedPassword = async (password: string) => {
-  const saltRounds = 10;
-  const hashedPassword = await bcrypt.hash(password, saltRounds);
-  return hashedPassword;
-};
 
 export const createUser = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {

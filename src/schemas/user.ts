@@ -14,6 +14,14 @@ const userSchema = z.object({
   isAdmin: z.boolean().default(false),
 });
 
-type UserData = z.infer<typeof userSchema>;
+const loginSchema = z.object({
+  email: z
+    .string()
+    .email()
+    .refine((value) => value.endsWith("@nalosolutions.com"), {
+      message: "Must be a NALO email",
+    }),
+  password: z.string().min(12),
+});
 
-export { UserData, userSchema };
+export { userSchema, loginSchema };

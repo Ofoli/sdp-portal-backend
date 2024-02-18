@@ -1,9 +1,9 @@
-import { model, Document, Schema } from "mongoose";
-import { UserData } from "../schemas/user";
+import { model, Schema } from "mongoose";
+import type { UserDocument } from "../types/user";
 
 const UserRequiredString = { type: String, required: true };
 
-const User = new Schema(
+const UserSchema = new Schema(
   {
     firstname: UserRequiredString,
     lastname: UserRequiredString,
@@ -20,4 +20,11 @@ const User = new Schema(
   { timestamps: true }
 );
 
-export default model<UserData & Document>("User", User);
+const User = model<UserDocument>("User", UserSchema);
+
+export default User;
+
+export const findUserByEmail = async (email: string) => {
+  const user = await User.findOne({ email: email });
+  return user;
+};
