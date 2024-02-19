@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { config } from "../config/config";
+import type { JWTData } from "../types/user";
 
 export const createHashedPassword = async (password: string) => {
   const salt = config.PASSWORD_SALT!;
@@ -8,13 +9,13 @@ export const createHashedPassword = async (password: string) => {
   return hashedPassword;
 };
 
-export const generateAuthToken = (userId: string) => {
+export const generateAuthToken = (data: JWTData) => {
   const { SECRET, EXPIRATION } = config.JWT_TOKEN;
-  const token = jwt.sign({ userId }, SECRET, { expiresIn: EXPIRATION });
+  const token = jwt.sign(data, SECRET, { expiresIn: EXPIRATION });
   return token;
 };
 
-export const verifyAuthToken = (token: string): { userId: string } | null => {
+export const verifyAuthToken = (token: string): JWTData | null => {
   let data = null;
 
   jwt.verify(token, config.JWT_TOKEN.SECRET, (err, jwtData) => {
