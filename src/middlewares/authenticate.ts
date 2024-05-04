@@ -16,8 +16,7 @@ export function authenticate(
     return next(error);
   }
 
-  const token = authorization.split(" ")[1];
-  const data = verifyAuthToken(token);
+  const data = verifyAuthToken(authorization);
 
   if (!data) {
     const error = new AppError(
