@@ -6,8 +6,8 @@ import type { SdpReportPayload } from "../types/report";
 
 export const addSdpReport = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const { report }: SdpReportPayload = req.body;
-    await Report.create(report);
+    const { user, report }: SdpReportPayload = req.body;
+    await Report.create({ ...report, user });
     return res.json({ status: STATUSES.SUCCESS });
   }
 );

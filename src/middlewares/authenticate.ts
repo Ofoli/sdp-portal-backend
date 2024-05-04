@@ -27,7 +27,7 @@ export function authenticate(
   }
 
   const { userId, isAdmin } = data;
-  const id: string = req.params.id || req.body.userId;
+  const id: string = req.params.id || req.body.user;
   const isAuthorized = isAdmin || userId === id;
 
   if (!isAuthorized) {

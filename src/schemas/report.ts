@@ -10,5 +10,6 @@ export const reportSchema = z.object({
 });
 
 export const addReportSchema = z.object({
+  user: z.string(),
   report: z.array(reportSchema),
 });

@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from "express";
-import { ObjectId } from "mongodb";
 import { StatusCodes } from "http-status-codes";
 import catchAsync from "../utils/catch-async";
 import { createHashedPassword } from "../utils/auth";
@@ -34,11 +33,6 @@ export const getUsers = catchAsync(
 export const getUser = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
-
-    const isValidId = ObjectId.isValid(id);
-    if (!isValidId) {
-      return next(new AppError("Invalid userid", StatusCodes.BAD_REQUEST));
-    }
 
     const user = await User.findOne({ _id: id }).select("-password -__v");
     if (!user) {
