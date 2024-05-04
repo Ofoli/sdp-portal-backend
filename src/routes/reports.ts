@@ -1,11 +1,11 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import { URLS } from "../config/constants";
+import { addSdpReport } from "../controllers/reports";
+import { authenticate } from "../middlewares/authenticate";
+import { validateSdpData } from "../middlewares/validators";
 
 const router = express.Router();
 
-const testReports = (req: Request, res: Response) =>
-  res.send({ status: true, reports: [] });
-
-router.get(URLS.report, testReports);
+router.post(URLS.report, authenticate, validateSdpData, addSdpReport);
 
 export default router;
