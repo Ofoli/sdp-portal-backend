@@ -25,3 +25,44 @@ export const fetchReport = catchAsync(
     return res.json({ status: STATUSES.SUCCESS, data: reports });
   }
 );
+
+export const getRevenueDates = catchAsync(
+  async (req: Request, res: Response) => {
+    const month = req.params.month;
+    const { startAt, endAt } = getPeriod(month);
+    const dates = await Report.find(
+      {
+        revenueDate: { $gte: startAt, $lte: endAt },
+      },
+      { revenueDate: 1 }
+    );
+
+    return res.json({ status: STATUSES.SUCCESS, data: dates });
+  }
+);
+
+export const getUserHistory = catchAsync(
+  async (req: Request, res: Response) => {
+    const userActivities = await Report.find({})
+      .populate({
+        path: "user",
+        select: "-__v",
+      })
+      .select({ revenueDate: 1, user: 1 })
+      .sort({
+        createdAt: -1,
+      });
+
+    const history = new Map();
+
+    for (const activity of userActivities) {
+      const id = activity._id.toString();
+      if (!history.has(id)) history.set(id, activity);
+    }
+
+    return res.json({
+      status: STATUSES.SUCCESS,
+      data: Array.from(history.values()),
+    });
+  }
+);
