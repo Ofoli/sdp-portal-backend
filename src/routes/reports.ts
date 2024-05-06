@@ -1,11 +1,20 @@
 import express from "express";
 import { URLS } from "../config/constants";
-import { addSdpReport } from "../controllers/reports";
+import { addSdpReport, fetchReport } from "../controllers/reports";
 import { authenticate } from "../middlewares/authenticate";
-import { validateSdpData } from "../middlewares/validators";
+import {
+  validateSdpData,
+  validateSdpQueryData,
+} from "../middlewares/validators";
 
 const router = express.Router();
 
 router.post(URLS.report, authenticate, validateSdpData, addSdpReport);
+router.get(
+  `${URLS.report}/:id`,
+  authenticate,
+  validateSdpQueryData,
+  fetchReport
+);
 
 export default router;
