@@ -2,8 +2,9 @@ import { Request, Response, NextFunction } from "express";
 import { z } from "zod";
 //schemas
 import { userSchema, loginSchema } from "../schemas/user";
+import { addReportSchema } from "../schemas/report";
 
-export function validateData(schema: z.ZodObject<any, any>) {
+function validateData(schema: z.ZodObject<any, any>) {
   return (req: Request, res: Response, next: NextFunction) => {
     try {
       schema.parse(req.body);
@@ -16,3 +17,4 @@ export function validateData(schema: z.ZodObject<any, any>) {
 
 export const validateUserData = validateData(userSchema);
 export const validateLoginData = validateData(loginSchema);
+export const validateSdpData = validateData(addReportSchema);

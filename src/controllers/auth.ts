@@ -21,11 +21,14 @@ export const loginUser = catchAsync(
       return next(new AppError("Invalid Password", StatusCodes.BAD_REQUEST));
     }
 
+    const { _id, isAdmin } = user;
+    const token = generateAuthToken({ userId: _id, isAdmin });
+
     return res.json({
       status: STATUSES.SUCCESS,
       data: {
         user: user.getUserWithoutPassword(),
-        token: generateAuthToken(user._id),
+        token,
       },
     });
   }
