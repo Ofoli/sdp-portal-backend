@@ -5,7 +5,7 @@ export const reportSchema = z.object({
   revenue: z.number(),
   network: z.string(),
   service: z.string(),
-  revenueDate: z.date(),
+  revenueDate: z.string(),
   shortcode: z.string(),
 });
 

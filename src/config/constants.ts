@@ -5,8 +5,15 @@ export const STATUSES = {
 };
 export const URLS = {
   base: "/",
-  users: "/api/users",
-  report: "/api/report",
   auth: "/api/auth",
+  users: "/api/users",
+  report: {
+    add: "/api/report",
+    query: "/api/report/:id",
+    history: "/api/report/:id/history",
+    recents: "/api/report/:id/recent-dates",
+  },
+  recentActivity: "/api/:id/recent-activities",
+
   notFound: "*",
 };
