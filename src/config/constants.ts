@@ -10,8 +10,8 @@ export const URLS = {
   report: {
     add: "/api/report",
     query: "/api/report/:id",
-    history: "/api/report/history/:id",
-    recents: "/api/report/recent-dates/:id",
+    history: "/api/report/:id/history",
+    recents: "/api/report/:id/recent-dates",
   },
   recentActivity: "/api/:id/recent-activities",
 

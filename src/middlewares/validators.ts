@@ -18,7 +18,7 @@ function validateData(schema: z.ZodObject<any, any>) {
 function validateParams(schema: z.ZodObject<any, any>) {
   return (req: Request, res: Response, next: NextFunction) => {
     try {
-      schema.parse(req.params);
+      schema.parse(req.query);
       next();
     } catch (err) {
       next(err);
