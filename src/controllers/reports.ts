@@ -82,7 +82,7 @@ export const getUserHistory = catchAsync(
         path: "user",
         select: "firstname lastname color",
       })
-      .select({ revenueDate: 1, user: 1 })
+      .select({ createdAt: 1, user: 1 })
       .sort({
         createdAt: -1,
       });
