@@ -1,6 +1,7 @@
 import mysql from "mysql2/promise";
 import { config } from "../config/config";
 import type { SdpReport } from "../types/report";
+import { STATUSES } from "../config/constants";
 
 type SdbConfig = typeof config.SDB;
 
@@ -11,7 +12,7 @@ class ShortcodeDB {
     this.config = config;
   }
   async uploadSdp(report: SdpReport[]) {
-    let uploadStatus = false;
+    let uploadStatus = STATUSES.FAILED;
     const connection = await mysql.createConnection({
       host: this.config.HOST,
       database: this.config.NAME,
@@ -27,7 +28,8 @@ class ShortcodeDB {
       await connection.beginTransaction();
       await connection.execute(sql);
       await connection.commit();
-      uploadStatus = true;
+
+      uploadStatus = STATUSES.SUCCESS;
     } catch (err) {
       await connection.rollback();
     } finally {
@@ -36,7 +38,7 @@ class ShortcodeDB {
     }
   }
 
-  formatSdpValues(report: SdpReport[]) {
+  private formatSdpValues(report: SdpReport[]) {
     const createdAt = new Date().toISOString().slice(1, 10);
     const values = report.map((sdp) => [
       sdp.network,

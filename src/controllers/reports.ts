@@ -1,22 +1,43 @@
-import { NextFunction, Request, Response } from "express";
 import catchAsync from "../utils/catch-async";
 import Report from "../models/report";
+import AppError from "../utils/app-error";
+import { shortcodeDb } from "../utils/sdb";
 import { STATUSES } from "../config/constants";
 import { getPeriod } from "../utils/report";
-import type { SdpReportPayload, SdpQueryParams } from "../types/report";
-import AppError from "../utils/app-error";
 import { StatusCodes } from "http-status-codes";
+import type { NextFunction, Request, Response } from "express";
+import type { SdpReportPayload, SdpQueryParams } from "../types/report";
 
-export const addSdpReport = catchAsync(async (req: Request, res: Response) => {
-  const { user, report }: SdpReportPayload = req.body;
-  const userReport = report.map((sdp) => ({
-    ...sdp,
-    user,
-    revenueDate: new Date(sdp.revenueDate),
-  }));
-  await Report.create(userReport);
-  return res.json({ status: STATUSES.SUCCESS });
-});
+export const addSdpReport = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { user, report }: SdpReportPayload = req.body;
+    const sampleRevenueDate = new Date(report[0].revenueDate);
+
+    const sdp = await Report.findOne({ revenueDate: sampleRevenueDate });
+    if (sdp) {
+      const error = new AppError("Duplicate Report", StatusCodes.CONFLICT);
+      return next(error);
+    }
+
+    const sdbUploadStatus = await shortcodeDb.uploadSdp(report);
+    if (!sdbUploadStatus) {
+      const error = new AppError(
+        "Report upload failed",
+        StatusCodes.INTERNAL_SERVER_ERROR
+      );
+      return next(error);
+    }
+
+    const userReport = report.map((sdp) => ({
+      ...sdp,
+      user,
+      revenueDate: new Date(sdp.revenueDate),
+    }));
+    await Report.create(userReport);
+
+    return res.json({ status: STATUSES.SUCCESS });
+  }
+);
 
 export const fetchReport = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
