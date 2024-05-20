@@ -14,6 +14,13 @@ const config = {
     CONN_RETRY_INTERVAL: 1000,
     CONN_RETRY_ATTEMPTS: 5,
   },
+  SDB: {
+    USERNAME: process.env.SDB_USERNAME!,
+    PASSWORD: process.env.SDB_PASSWORD!,
+    HOST: process.env.SDB_HOST!,
+    NAME: process.env.SDB_NAME!,
+    PORT: 3306,
+  },
   PASSWORD_SALT: process.env.PASSWORD_SALT,
   JWT_TOKEN: { SECRET: process.env.JWT_TOKEN_SECRET!, EXPIRATION: "30m" },
 };

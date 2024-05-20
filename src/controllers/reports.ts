@@ -7,18 +7,16 @@ import type { SdpReportPayload, SdpQueryParams } from "../types/report";
 import AppError from "../utils/app-error";
 import { StatusCodes } from "http-status-codes";
 
-export const addSdpReport = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
-    const { user, report }: SdpReportPayload = req.body;
-    const userReport = report.map((sdp) => ({
-      ...sdp,
-      user,
-      revenueDate: new Date(sdp.revenueDate),
-    }));
-    await Report.create(userReport);
-    return res.json({ status: STATUSES.SUCCESS });
-  }
-);
+export const addSdpReport = catchAsync(async (req: Request, res: Response) => {
+  const { user, report }: SdpReportPayload = req.body;
+  const userReport = report.map((sdp) => ({
+    ...sdp,
+    user,
+    revenueDate: new Date(sdp.revenueDate),
+  }));
+  await Report.create(userReport);
+  return res.json({ status: STATUSES.SUCCESS });
+});
 
 export const fetchReport = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
