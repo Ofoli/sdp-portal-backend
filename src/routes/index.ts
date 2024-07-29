@@ -10,7 +10,7 @@ import { StatusCodes } from "http-status-codes";
 const router = express.Router();
 
 const testApp = (req: Request, res: Response) =>
-  res.send({ status: true, message: "App is running!!!" });
+  res.json({ status: true, message: "App is running!!!" });
 
 const send404 = (req: Request, res: Response, next: NextFunction) =>
   next(

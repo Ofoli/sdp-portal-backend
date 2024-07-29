@@ -11,16 +11,20 @@ class ShortcodeDB {
   constructor(config: any) {
     this.config = config;
   }
-  async uploadSdp(report: SdpReport[]) {
-    let uploadStatus = STATUSES.FAILED;
-    const connection = await mysql.createConnection({
+
+  private getConnection = async () => {
+    return await mysql.createConnection({
       host: this.config.HOST,
       database: this.config.NAME,
       user: this.config.USERNAME,
       password: this.config.PASSWORD,
       port: this.config.PORT,
     });
+  };
 
+  async uploadSdp(report: SdpReport[]) {
+    let uploadStatus = STATUSES.FAILED;
+    const connection = await this.getConnection();
     const values = this.formatSdpValues(report);
     const sql = `INSERT INTO revenue (network, counts, revenue, service, revenue_date, created_on, shortcode) VALUES ${values}`;
 
