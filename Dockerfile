@@ -18,6 +18,7 @@ FROM node:20-alpine as prod
 WORKDIR /app
 
 COPY package*.json .
+COPY .env .
 
 ENV NODE_ENV=production
 
