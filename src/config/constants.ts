@@ -1,3 +1,6 @@
+import path from "path";
+
+export const ENV_FILE_PATH = path.join(__dirname, "..", "..", ".env");
 export const MONGO_DB_HOST = "mongodb://db";
 export const STATUSES = { SUCCESS: true, FAILED: false };
 export const URLS = {

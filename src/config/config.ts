@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
-import { MONGO_DB_HOST } from "./constants";
+import { MONGO_DB_HOST, ENV_FILE_PATH } from "./constants";
 
-dotenv.config();
+dotenv.config({ path: ENV_FILE_PATH });
 
 const dbPort = process.env.DB_PORT;
 const database = process.env.DB_NAME;

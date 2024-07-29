@@ -2,9 +2,10 @@ services:
   api:
     build:
       context: .
+      target: prod
       dockerfile: Dockerfile
     ports:
-      - ${PORT}:8001
+      - ${PORT}:{PORT}
     environment:
       - NODE_ENV=${NODE_ENV}
     command: node dist/app.js
@@ -12,7 +13,7 @@ services:
       - db
     restart: always
   db:
-    image: mongo:latest
+    image: mongo:8.0
     volumes:
       - db-data:/data/db
     environment:
