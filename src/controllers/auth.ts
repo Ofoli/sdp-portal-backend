@@ -22,7 +22,7 @@ export const loginUser = catchAsync(
     }
 
     const { _id, isAdmin } = user;
-    const token = generateAuthToken({ userId: _id, isAdmin });
+    const token = generateAuthToken({ userId: _id as string, isAdmin });
 
     return res.json({
       status: STATUSES.SUCCESS,
