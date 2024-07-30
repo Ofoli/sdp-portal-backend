@@ -4,7 +4,7 @@ import { config } from "../config/config";
 import type { JWTData } from "../types/user";
 
 export const createHashedPassword = async (password: string) => {
-  const salt = config.PASSWORD_SALT!;
+  const salt = parseInt(config.PASSWORD_SALT!);
   const hashedPassword = await bcrypt.hash(password, salt);
   return hashedPassword;
 };
