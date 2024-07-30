@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import catchAsync from "../utils/catch-async";
 import { STATUSES } from "../config/constants";
 import { findUserByEmail } from "../models/user";
-import { createHashedPassword, generateAuthToken } from "../utils/auth";
+import { checkPassword, generateAuthToken } from "../utils/auth";
 import AppError from "../utils/app-error";
 import { StatusCodes } from "http-status-codes";
 import type { LoginData } from "../types/user";
@@ -15,9 +15,9 @@ export const loginUser = catchAsync(
     if (!user) {
       return next(new AppError("User Does Not Exist", StatusCodes.BAD_REQUEST));
     }
-
-    const hashedPassword = await createHashedPassword(password);
-    if (hashedPassword !== user.password) {
+    const isValidPassword = await checkPassword(password, user.password);
+    console.log({ isValidPassword });
+    if (!isValidPassword) {
       return next(new AppError("Invalid Password", StatusCodes.BAD_REQUEST));
     }
 

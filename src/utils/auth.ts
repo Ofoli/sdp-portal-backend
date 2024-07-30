@@ -3,11 +3,11 @@ import jwt from "jsonwebtoken";
 import { config } from "../config/config";
 import type { JWTData } from "../types/user";
 
-export const createHashedPassword = async (password: string) => {
-  const salt = parseInt(config.PASSWORD_SALT!);
-  const hashedPassword = await bcrypt.hash(password, salt);
-  return hashedPassword;
-};
+export const createHashedPassword = async (password: string) =>
+  await bcrypt.hash(password, parseInt(config.PASSWORD_SALT!));
+
+export const checkPassword = async (password: string, hashedPassword: string) =>
+  await bcrypt.compare(password, hashedPassword);
 
 export const generateAuthToken = (data: JWTData) => {
   const { SECRET, EXPIRATION } = config.JWT_TOKEN;
