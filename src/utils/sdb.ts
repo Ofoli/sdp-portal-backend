@@ -1,7 +1,8 @@
 import mysql from "mysql2/promise";
 import { config } from "../config/config";
-import type { SdpReport } from "../types/report";
+import { logger } from "./logger";
 import { STATUSES } from "../config/constants";
+import type { SdpReport } from "../types/report";
 
 type SdbConfig = typeof config.SDB;
 
@@ -36,6 +37,7 @@ class ShortcodeDB {
       uploadStatus = STATUSES.SUCCESS;
     } catch (err) {
       await connection.rollback();
+      logger.error({ action: "uploadSdp", err });
     } finally {
       await connection.end();
       return uploadStatus;

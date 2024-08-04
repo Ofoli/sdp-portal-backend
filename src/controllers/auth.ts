@@ -16,7 +16,6 @@ export const loginUser = catchAsync(
       return next(new AppError("User Does Not Exist", StatusCodes.BAD_REQUEST));
     }
     const isValidPassword = await checkPassword(password, user.password);
-    console.log({ isValidPassword });
     if (!isValidPassword) {
       return next(new AppError("Invalid Password", StatusCodes.BAD_REQUEST));
     }

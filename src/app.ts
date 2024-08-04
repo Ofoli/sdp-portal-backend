@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import { connectToMongoDB } from "./config/mongodb";
 import { config } from "./config/config";
+import { logger } from "./utils/logger";
 import router from "./routes";
 
 const app = express();
@@ -13,8 +14,8 @@ app.use(router);
 
 connectToMongoDB(config.DB.CONN_RETRY_ATTEMPTS).then((connected) => {
   if (connected) {
-    app.listen(PORT, () => {
-      console.log(`Server is running at http://localhost:${PORT}`);
-    });
+    app.listen(PORT, () =>
+      logger.info(`Server is running at http://localhost:${PORT}`)
+    );
   }
 });
