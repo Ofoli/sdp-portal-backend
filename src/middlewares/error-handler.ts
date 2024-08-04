@@ -4,7 +4,7 @@ import { StatusCodes } from "http-status-codes";
 import { fromZodError } from "zod-validation-error";
 import { STATUSES } from "../config/constants";
 import { logger } from "../utils/logger";
-import type { Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 
 type MongooseError = Error & {
   code?: number;
@@ -14,7 +14,8 @@ type MongooseError = Error & {
 export default function globalErrorHandler(
   error: Error | ZodError,
   req: Request,
-  res: Response
+  res: Response,
+  next: NextFunction
 ) {
   const url = req.originalUrl;
   if (error instanceof ZodError) {
