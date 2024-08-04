@@ -25,21 +25,20 @@ class ShortcodeDB {
 
   async uploadSdp(report: SdpReport[]) {
     let uploadStatus = STATUSES.FAILED;
-    // const connection = await this.getConnection();
+    const connection = await this.getConnection();
     const values = this.formatSdpValues(report);
     const sql = `INSERT INTO revenue (network, counts, revenue, service, revenue_date, created_on, shortcode) VALUES ${values}`;
-    logger.info({ SQL: sql });
 
     try {
-      // await connection.beginTransaction();
-      // await connection.execute(sql);
-      // await connection.commit();
-      // uploadStatus = STATUSES.SUCCESS;
+      await connection.beginTransaction();
+      await connection.execute(sql);
+      await connection.commit();
+      uploadStatus = STATUSES.SUCCESS;
     } catch (err) {
-      // await connection.rollback();
+      await connection.rollback();
       logger.error({ action: "uploadSdp", err, sql });
     } finally {
-      // await connection.end();
+      await connection.end();
       return uploadStatus;
     }
   }
