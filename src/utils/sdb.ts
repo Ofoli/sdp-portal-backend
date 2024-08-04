@@ -37,7 +37,7 @@ class ShortcodeDB {
       uploadStatus = STATUSES.SUCCESS;
     } catch (err) {
       await connection.rollback();
-      logger.error({ action: "uploadSdp", err });
+      logger.error({ action: "uploadSdp", err, sql });
     } finally {
       await connection.end();
       return uploadStatus;
