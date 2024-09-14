@@ -21,7 +21,7 @@ const config = {
     NAME: process.env.SDB_NAME!,
     PORT: 3306,
   },
-  PASSWORD_SALT: process.env.PASSWORD_SALT,
+  PASSWORD_SALT: process.env.PASSWORD_SALT!,
   JWT_TOKEN: { SECRET: process.env.JWT_TOKEN_SECRET!, EXPIRATION: "30m" },
 };
 

@@ -39,8 +39,8 @@ class ShortcodeDB {
       logger.error({ action: "uploadSdp", err, sql });
     } finally {
       await connection.end();
-      return uploadStatus;
     }
+    return uploadStatus;
   }
 
   private formatSdpValues(report: SdpReport[]) {
