@@ -1,7 +1,7 @@
 import winston from "winston";
 
 const { timestamp, printf, combine } = winston.format;
-const formatter = (log: Record<string, string>) =>
+const formatter = (log: winston.Logform.TransformableInfo) =>
   `${log.timestamp} - ${log.level.toUpperCase()} - ${JSON.stringify(
     log.message
   )}`;
