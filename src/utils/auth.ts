@@ -1,5 +1,5 @@
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+import jwt, { Secret, SignOptions } from "jsonwebtoken";
 import { config } from "../config/config";
 import type { JWTData } from "../types/user";
 
@@ -10,7 +10,8 @@ export const checkPassword = async (password: string, hashedPassword: string) =>
   await bcrypt.compare(password, hashedPassword);
 
 export const generateAuthToken = (data: JWTData) => {
-  const { SECRET, EXPIRATION } = config.JWT_TOKEN;
+  const SECRET: Secret = config.JWT_TOKEN.SECRET;
+  const EXPIRATION: SignOptions["expiresIn"] = config.JWT_TOKEN.EXPIRATION;
   const token = jwt.sign(data, SECRET, { expiresIn: EXPIRATION });
   return token;
 };
