@@ -24,4 +24,5 @@ ENV NODE_ENV=production
 
 RUN npm ci --omit=dev
 
+COPY --from=dev /app/node_modules ./node_modules
 COPY --from=dev /app/dist ./dist

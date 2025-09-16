@@ -6,6 +6,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - ${PORT}:${PORT}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     environment:
       - NODE_ENV=${NODE_ENV}
     command: node dist/app.js
