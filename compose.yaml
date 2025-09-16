@@ -9,6 +9,8 @@ services:
     environment:
       - NODE_ENV=${NODE_ENV}
     command: node dist/app.js
+    volumes:
+      - ~/.ssh:/root/.ssh:ro
     depends_on:
       - db
     restart: always
